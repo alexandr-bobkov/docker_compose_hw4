@@ -304,3 +304,51 @@ docker exec -it custom-nginx-t2 bash -c "apt-get update && apt-get install -y na
 
 
 </details>
+
+-----
+-----
+
+<details>
+<summary><b>Ответ Задача 4</b></summary>
+
+**Выполненные команды :**
+* Флаг **`-v` (volume)** монтирует папку хоста внутрь контейнера.
+* Переменная **`$(pwd)`** автоматически подставляет полный путь к текущей папке.
+
+```bash
+# Запуск контейнеров с монтированием текущей директории в /data
+docker run -dit -v $(pwd):/data --name centos-t4 centos:7
+docker run -dit -v $(pwd):/data --name debian-t4 debian
+
+> 📸 ** Скриншот запущенных контейнеров:** 📸
+> ![Скриншот](./task1/img/9.png)
+
+# Создание файла внутри CentOS
+docker exec -it centos-t4 bash
+echo 'Hello from CentOS container!' > /data/centos_file.txt
+exit
+
+# Создание файла на хост-машине
+echo "Hello from Host machine!" > host_file.txt
+
+# Проверка файлов внутри Debian (ls -l выводит список, cat читает содержимое)
+docker exec -it debian-t4 bash
+ls -l /data
+cat /data/centos_file.txt
+cat /data/host_file.txt
+exit
+```
+
+> 📸 ** Скриншот выполненных команд и результат:** 📸
+> ![Скриншот](./task1/img/10.png)
+
+</details>
+
+-----
+-----
+
+<details>
+<summary><b>Ответ Задача 5</b></summary>
+
+</details>
+
