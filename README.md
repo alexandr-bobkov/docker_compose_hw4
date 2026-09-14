@@ -319,10 +319,12 @@ docker exec -it custom-nginx-t2 bash -c "apt-get update && apt-get install -y na
 # Запуск контейнеров с монтированием текущей директории в /data
 docker run -dit -v $(pwd):/data --name centos-t4 centos:7
 docker run -dit -v $(pwd):/data --name debian-t4 debian
+```
 
-> 📸 ** Скриншот запущенных контейнеров:** 📸
+> 📸 ** Скриншот выполненных команд и результат:** 📸
 > ![Скриншот](./task1/img/9.png)
 
+```bash
 # Создание файла внутри CentOS
 docker exec -it centos-t4 bash
 echo 'Hello from CentOS container!' > /data/centos_file.txt
