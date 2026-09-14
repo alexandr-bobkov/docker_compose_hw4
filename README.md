@@ -131,6 +131,14 @@ services:
 
 <details>
 <summary><b>Ответ Задача 1</b></summary>
+**0. Скачивание базового образа**
+Сначала скачиваем официальный образ веб-сервера нужной версии на локальную машину:
+* **`docker pull`** — команда для загрузки образов из Docker Hub без их запуска.
+```bash
+docker pull nginx:1.29.0
+```
+
+
 **1. Подготовка рабочей директории и создание файлов**
 
 ```bash
@@ -166,7 +174,8 @@ docker push alexandr8517/custom-nginx:1.0.0
 
 **Ссылка на Docker Hub:**
 [https://hub.docker.com/repository/docker/alexandr8517/custom-nginx/general](https://hub.docker.com/repository/docker/alexandr8517/custom-nginx/general)
-
+> ** Скриншот c hub.docker.com:** 📸
+> ![Скриншот](./task1/img/1.png)
 
 
 </details>
