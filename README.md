@@ -174,9 +174,38 @@ docker push alexandr8517/custom-nginx:1.0.0
 
 **Ссылка на Docker Hub:**
 [https://hub.docker.com/repository/docker/alexandr8517/custom-nginx/general](https://hub.docker.com/repository/docker/alexandr8517/custom-nginx/general)
-> ** Скриншот c hub.docker.com:** 📸
+> 📸 ** Скриншот c hub.docker.com:** 📸
 > ![Скриншот](./task1/img/1.png)
 
+
+</details>
+
+-----
+-----
+<details>
+<summary><b>Ответ Задача 2</b></summary>
+**Выполненные команды:**
+* Флаг **`-d` (detach)** запускает контейнер в фоновом режиме (освобождая консоль).
+* Флаг **`--name`** задает контейнеру удобное имя вместо случайного набора букв.
+* Флаг **`-p 127.0.0.1:8080:80`** пробрасывает порт (порт хоста : порт контейнера). Трафик с порта 8080 ПК пойдет на 80-й порт внутри контейнера.
+* **`curl`** — утилита для проверки доступности сайтов (делает HTTP-запрос).
+
+```bash
+# Запуск контейнера
+docker run -d --name bobkov-custom-nginx-t2 -p 127.0.0.1:8080:80 alexandr8517/custom-nginx:1.0.0
+
+# Переименование контейнера
+docker rename bobkov-custom-nginx-t2 custom-nginx-t2
+
+# Скрипт проверки из задания
+date +"%d-%m-%Y %T.%N %Z" ; sleep 0.150 ; docker ps ; ss -tlpn | grep 127.0.0.1:8080 ; docker logs custom-nginx-t2 -n1 ; docker exec -it custom-nginx-t2 base64 /usr/share/nginx/html/index.html
+
+# Проверка доступности веб-страницы снаружи
+curl [http://127.0.0.1:8080](http://127.0.0.1:8080)
+```
+
+> 📸 ** Скриншот команд:** 📸
+> ![Скриншот](./task1/img/2.png)
 
 </details>
 
