@@ -165,7 +165,7 @@ docker push alexandr8517/custom-nginx:1.0.0
 ```
 
 **Ссылка на Docker Hub:**
-[https://hub.docker.com/r/alexandr8517/custom-nginx/general](https://hub.docker.com/r/alexandr8517/custom-nginx/general)
+[https://hub.docker.com/repository/alexandr8517/custom-nginx/general](https://hub.docker.com/repository/alexandr8517/custom-nginx/general)
 
 
 
