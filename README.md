@@ -352,5 +352,90 @@ exit
 <details>
 <summary><b>Ответ Задача 5</b></summary>
 
+**1. Создание файлов и первый запуск**
+
+```bash
+mkdir -p /tmp/netology/docker/task5 && cd /tmp/netology/docker/task5
+
+cat << 'EOF' > compose.yaml
+version: "3"
+services:
+  portainer:
+    network_mode: host
+    image: portainer/portainer-ce:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+EOF
+
+cat << 'EOF' > docker-compose.yaml
+version: "3"
+services:
+  registry:
+    image: registry:2
+    ports:
+    - "5000:5000"
+EOF
+```
+> 📸 ** Скриншот выполненных команд и результат:** 📸
+> ![Скриншот](./task1/img/11.png)
+
+При выполнении `docker compose up -d` запущен только `compose.yaml` (поднялся Portainer). Согласно спецификации Docker Compose, если в одной директории находятся файлы `compose.yaml` и `docker-compose.yaml`, приоритет безоговорочно отдается `compose.yaml`. Старый формат при этом игнорируется.
+
+**2. Редактирование файла `compose.yaml` (с использованием include):**
+Чтобы запустить оба сервиса, файл `compose.yaml` отредактирован:
+```text
+cat << 'EOF' > compose.yaml
+version: "3"
+
+include:
+  - docker-compose.yaml
+
+services:
+  portainer:
+    network_mode: host
+    image: portainer/portainer-ce:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+EOF
+
+```
+> 📸 ** Скриншот выполненных команд и результат:** 📸
+> ![Скриншот](./task1/img/12.png)
+
+
+**3. Отправка образа в локальный Registry:**
+* **`docker tag`** — создает копию (тег) образа, которая указывает на локальный реестр.
+```bash
+docker tag alexandr8517/custom-nginx:1.0.0 127.0.0.1:5000/custom-nginx:latest
+docker push 127.0.0.1:5000/custom-nginx:latest
+```
+> 📸 ** Скриншот выполненных команд и результат:** 📸
+> ![Скриншот](./task1/img/13.png)
+
+> 📸 ** Скриншот запущенного Portainer:** 📸
+> ![Скриншот](./task1/img/14.png)
+
+> 📸 ** Скриншот вкладка "Tree" -> развернутое поле "Config":** 📸
+> ![Скриншот](./task1/img/16.png)
+
+
+
+**4. Объяснение Warning при удалении манифеста:**
+
+> 📸 ** Скриншот команд:** 📸
+> ![Скриншот](./task1/img/17.png)
+
+После удаления `compose.yaml` и запуска `docker compose up -d` появилось предупреждение `Found orphan containers`. 
+- Docker увидел, что контейнер Portainer работает, но он отсутствует в текущем контексте (читается только оставшийся `docker-compose.yaml`). Compose сообщает о "потерявшемся".
+
+**Предложенное действие (очистка "потерявшегося") и удаление проекта:**
+* Флаг **`--remove-orphans`** автоматически удаляет контейнеры, которых больше нет в файле конфигурации.
+* **`docker compose down`** — полностью останавливает и удаляет проект.
+
+```bash
+docker compose up -d --remove-orphans
+docker compose down
+```
+
 </details>
 
